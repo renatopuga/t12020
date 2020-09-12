@@ -1,5 +1,11 @@
 # t12020 - Ambiente SSH: Linux e Primeiros Pipes
 
+# gitbash
+
+* Para Windows - Terminal
+ * https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/PortableGit-2.28.0-32-bit.7z.exe
+* Para Macbook: Buscar no Spotlight (buscar por Terminal - dois cliques)
+
 ```bash
 ssh -o "ServerAliveInterval 120" -p SUA_PORTA convidado@3.236.18.138
 ```
@@ -62,9 +68,9 @@ git clone https://github.com/circulosmeos/gdown.pl.git
 cd gdown.pl
 
 # rodar o script ./gdown.pl download
-./gdown.pl https://drive.google.com/open?id=1LlBQ2BNI_vF-E_4ntrEexJQ2-Wea2e0o 003.fastq.gz
-./gdown.pl https://drive.google.com/open?id=1KKmk90gUk0174MvATZzWRwyqRSHJNZDv 017.fastq.gz
-./gdown.pl https://drive.google.com/open?id=11jtliN2G0vTs50-z79QxXLWkStPeuh2E 019.fastq.gz
+./gdown.pl/gdown.pl https://drive.google.com/open?id=1LlBQ2BNI_vF-E_4ntrEexJQ2-Wea2e0o 003.fastq.gz
+./gdown.pl/gdown.pl https://drive.google.com/open?id=1KKmk90gUk0174MvATZzWRwyqRSHJNZDv 017.fastq.gz
+./gdown.pl/gdown.pl https://drive.google.com/open?id=11jtliN2G0vTs50-z79QxXLWkStPeuh2E 019.fastq.gz
 
 # movendo arquivos fastq para outro diretorio
 mv 003.fastq.gz 017.fastq.gz 019.fastq.gz  ~/bioinfo/data/fastq
@@ -75,14 +81,6 @@ cd
 
 
 # Instalação
-
-```bash
-cd
-mkdir bioinfo
-mkdir bioinfo/app
-cd bioinfo/app
-
-```
 
 No terminal do Linux, vamos instalar alguns pacotes: (o resto vem instalado).
 
