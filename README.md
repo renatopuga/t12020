@@ -3,8 +3,10 @@
 # gitbash
 
 * Para Windows - Terminal
- * https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/PortableGit-2.28.0-32-bit.7z.exe
-* Para Macbook: Buscar no Spotlight (buscar por Terminal - dois cliques)
+	https://github.com/git-for-windows/git/releases/download/v2.28.0.windows.1/PortableGit-2.28.0-32-bit.7z.exe
+	
+* Para Macbook: 
+	Buscar no Spotlight (buscar por Terminal - dois cliques)
 
 ```bash
 ssh -o "ServerAliveInterval 120" -p SUA_PORTA convidado@3.236.18.138
