@@ -1,6 +1,8 @@
-# t12020
+# t12020 - Ambiente SSH: Linux e Primeiros Pipes
 
-# Ambiente SSH: Linux e Primeiros Pipes
+```bash
+ssh -o "ServerAliveInterval 120" -p SUA_PORTA convidado@3.236.18.138
+```
 
 # Primeiros Comandos
 
