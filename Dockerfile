@@ -1,13 +1,13 @@
-
 FROM gitpod/workspace-full
 
-RUN sudo apt-get update -y 
-RUN sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
-RUN sudo apt-get install -y fastqc
-RUN sudo apt-get install -y samtools
-RUN sudo apt-get install -y bwa
-RUN sudo apt-get install -y freebayes
+# Install custom tools, runtimes, etc.
+# For example "bastet", a command-line tetris clone:
+# RUN brew install bastet
+#
+# More information: https://www.gitpod.io/docs/config-docker/
 
-# set working directory
-WORKDIR /app
+RUN sudo apt-get update -y \
+  && sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata \ 
+  && sudo apt-get install -y fastqc samtools bwa freebayes
+  
 CMD ["fastqc", "samtools", "freebayes", "bwa"]
