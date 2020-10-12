@@ -200,9 +200,17 @@ FastQC 003 resultado
 
 ~10 min
 
-
 #cutadapt: localizar e remover adaptadres
 O Cutadapt localiza e remove sequências de adaptadores, primers, caudas poly-A e outros tipos de sequência indesejada. Aqui vamos utilizar as funções para "trimar" sequências pequenas e maiores do que o esperado. (Tempo ~3s):
+
+
+
+> Gitpod Note: Execute esse comando no terminal do gitpod caso o cutadapt não esteja instalado.
+
+```bash
+python3 -m pip install --user --upgrade cutadapt
+```
+
 
 ```bash
 
