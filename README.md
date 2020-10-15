@@ -97,7 +97,7 @@ cd ~/bioinfo/app/
 ./gdown.pl/gdown.pl https://drive.google.com/file/d/1XVnRT0GUKFuQifvoROgHMqoy4aV3PCGX/view?usp=sharing annovar.tar.gz
 
 # descompactar 
-tar -zxvf annovar.latest.tar.gz
+tar -zxvf annovar.tar.gz
 
 # entrar no diretorio annovar
 cd annovar
