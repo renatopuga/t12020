@@ -168,7 +168,7 @@ wget -c http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr17.fa.gz
 zcat chr13.fa.gz chr17.fa.gz > hg19.fa
 
 # rm para deletar os arquivos chr13.fa e chr17.fa
-rm chr13.fa chr17.fa
+rm chr13.fa.gz chr17.fa.gz
 
 # voltar para workspace
 cd /workspace/t12020
