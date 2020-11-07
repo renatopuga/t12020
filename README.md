@@ -43,12 +43,19 @@ cd bioinfo/resultados/
 
 # mkdir para criar o diretorio das amostras 003, 017 e 019
 mkdir 003 017 019
+
+# volta para workspace
+cd /workspace/t12020
+
 ```
 
 
 # Download dos Arquivos .FASTQ (no Google Drive) direto do terminal
 
 ```bash
+# volta para workspace
+cd /workspace/t12020
+
 # download do script para copiar os dados 
 git clone https://github.com/circulosmeos/gdown.pl.git
 
