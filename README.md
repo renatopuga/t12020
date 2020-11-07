@@ -10,9 +10,6 @@
 * Para Macbook: 
 	Buscar no Spotlight (buscar por Terminal - dois cliques)
 
-```bash
-ssh -o "ServerAliveInterval 120" -p SUA_PORTA convidado@3.236.18.138
-```
 
 # Primeiros Comandos
 
