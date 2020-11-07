@@ -23,23 +23,12 @@ ls
 # pwd para informar o diretorio atual
 pwd
 
-# cd para entrar e sair de diretorios 
-cd resultados/
-
-# e voltar para casa
-cd ../
-
-# aqui é a sua casa (seu home) 
-cd
-# ~ é a sua casa
-cd ~
-
 # criar o diretorio no home (caso ele ainda nao exista)
-mkdir ~/bioinfo/
-mkdir ~/bioinfo/resultados
-mkdir ~/bioinfo/reference
-mkdir ~/bioinfo/data
-mkdir ~/bioinfo/data/fastq
+mkdir bioinfo/
+mkdir bioinfo/resultados
+mkdir bioinfo/reference
+mkdir bioinfo/data
+mkdir bioinfo/data/fastq
 
 ```
 
@@ -52,10 +41,10 @@ Fonte: [Comandos Básicos do Terminal Linux](http://swcarpentry.github.io/shell-
 cd
 
 # mkdir para criar um diretorio
-mkdir ~/bioinfo/resultados
+mkdir bioinfo/resultados
 
 # cd para entrar no diretorio resultados
-cd ~/bioinfo/resultados/
+cd bioinfo/resultados/
 
 # mkdir para criar o diretorio das amostras 003, 017 e 019
 mkdir 003 017 019
@@ -68,16 +57,13 @@ mkdir 003 017 019
 # download do script para copiar os dados 
 git clone https://github.com/circulosmeos/gdown.pl.git
 
-# entrar no diretorio gdwon.pl
-cd gdown.pl
-
 # rodar o script ./gdown.pl download
 ./gdown.pl/gdown.pl https://drive.google.com/open?id=1LlBQ2BNI_vF-E_4ntrEexJQ2-Wea2e0o 003.fastq.gz
 ./gdown.pl/gdown.pl https://drive.google.com/open?id=1KKmk90gUk0174MvATZzWRwyqRSHJNZDv 017.fastq.gz
 ./gdown.pl/gdown.pl https://drive.google.com/open?id=11jtliN2G0vTs50-z79QxXLWkStPeuh2E 019.fastq.gz
 
 # movendo arquivos fastq para outro diretorio
-mv 003.fastq.gz 017.fastq.gz 019.fastq.gz  ~/bioinfo/data/fastq
+mv 003.fastq.gz 017.fastq.gz 019.fastq.gz  bioinfo/data/fastq
 
 # voltar para o home
 cd
@@ -90,10 +76,10 @@ No terminal do Linux, vamos instalar alguns pacotes: (o resto vem instalado).
 
 ``` bash
 # install dabases annovar
-# NOTA: entreno no site do ANNOVAR com seu e-mail e salve o arquivo no diretorio: ~/bionfo/app/
+# NOTA: entreno no site do ANNOVAR com seu e-mail e salve o arquivo no diretorio: bionfo/app/
 
 # entrar no diretorio
-cd ~/bioinfo/app/
+cd bioinfo/app/
 
 # download do arquivo annovar.latest.tar.gz
 ./gdown.pl/gdown.pl https://drive.google.com/file/d/1XVnRT0GUKFuQifvoROgHMqoy4aV3PCGX/view?usp=sharing annovar.tar.gz
@@ -124,12 +110,12 @@ Vamos utilizar uma instância na Amazon Cloud com Sistema Operacional Linux Ubun
 # Estrutura de Diretórios
 Estrutura de diretórios: sequências, programas e arquivos de referência.
 
-* ~/bioinfo
-	* ~/bioinfo/app
-	* ~/bioinfo/data
-		* ~/bioinfo/data/fastq
-	* ~/bioinfo/reference
-  * ~/bioinfo/resultados
+* bioinfo
+	* bioinfo/app
+	* bioinfo/data
+		* bioinfo/data/fastq
+	* bioinfo/reference
+  * bioinfo/resultados
 
 
 # Programas Instalados
@@ -152,7 +138,7 @@ Acessar o site: [Sequence and Annotation Downloads](http://hgdownload.cse.ucsc.e
 
 ```bash
 
-cd ~/bioinfo/reference
+cd bioinfo/reference
 
 # wget para fazer download do chr13
 wget -c http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr13.fa.gz
@@ -176,7 +162,7 @@ Agora, é preciso indexar o arquivo FASTA da referência. Todos os programas de 
 # bwa index para gerar o index da referencia hg19.fa
 
 # entrar no diretorio reference
-cd ~/bioinfo/reference
+cd bioinfo/reference
 
 # indexar o arquivo hg19.fa
 bwa index hg19.fa 
@@ -193,7 +179,7 @@ Gerar relatório de controle de qualidade com FastQC (Tempo ~10s):
 cd
 
 # rodar fastqc e salvar o resultado de cada amostra em seu diretorio
-fastqc -o ~/bioinfo/resultados/003/ ~/bioinfo/data/fastq/003.fastq.gz 
+fastqc -o bioinfo/resultados/003/ bioinfo/data/fastq/003.fastq.gz 
 ```
 
 FastQC 003 resultado
@@ -223,7 +209,7 @@ python3 -m pip install --user --upgrade cutadapt
 cd
 
 # cutadapt para remover sequencias de tamanho menores 100pb e maiores que 220
-cutadapt --minimum-length 100 --maximum-length 220 -q 15  -o ~/bioinfo/resultados/003/003.cutadapt.fastq  ~/bioinfo/data/fastq/003.fastq.gz
+cutadapt --minimum-length 100 --maximum-length 220 -q 15  -o bioinfo/resultados/003/003.cutadapt.fastq  bioinfo/data/fastq/003.fastq.gz
 ```
 
 003.cutadapt.fastq resultado
@@ -238,7 +224,7 @@ Alinha sequencias de tamanho 70bp-1Mbp com o algoritmo BWA-MEM. Em resumo o algo
 cd
 
 # rodar bwa para alinhar as sequencias contra o genoma de referencia
-bwa mem -R '@RG\tID:003\tSM:003_NGSA\tLB:Agilent\tPL:Ion'  ~/bioinfo/reference/hg19.fa ~/bioinfo/data/fastq/003.fastq.gz > ~/bioinfo/resultados/003/003.sam
+bwa mem -R '@RG\tID:003\tSM:003_NGSA\tLB:Agilent\tPL:Ion'  bioinfo/reference/hg19.fa bioinfo/data/fastq/003.fastq.gz > bioinfo/resultados/003/003.sam
 ```
 
 BWA-mem 003 resultado
@@ -252,7 +238,7 @@ BWA-mem 003 resultado
 Preencha coordenadas de posicionamento, posicione FLAGs relacionadas a partir a alinhamentos classificados por nome. Tempo (~5s):
 
 ```bash
-samtools fixmate ~/bioinfo/resultados/003/003.sam ~/bioinfo/resultados/003/003.bam
+samtools fixmate bioinfo/resultados/003/003.sam bioinfo/resultados/003/003.bam
 ```
 
 SAMTOOLS fixmate 003 resultado
@@ -266,7 +252,7 @@ Tempo: ~10min
 O ***samtools sort*** vai ordenar de nome para ordem de coordenadas. Tempo (5s):
 
 ```bash
-time samtools sort -O bam -o ~/bioinfo/resultados/003/003_sort.bam -T /tmp/ ~/bioinfo/resultados/003/003.bam 
+time samtools sort -O bam -o bioinfo/resultados/003/003_sort.bam -T /tmp/ bioinfo/resultados/003/003.bam 
 ```
 
 SAMTOOLS sort 003 resultado
@@ -280,7 +266,7 @@ Tempo: ~1min
 O ***samtools index*** cria um index (.BAI) do arquivo binário (.BAM):
 
 ```bash
-samtools index ~/bioinfo/resultados/003/003_sort.bam 
+samtools index bioinfo/resultados/003/003_sort.bam 
 ```
 
 SAMTOOLS index 003 resultado
@@ -293,7 +279,7 @@ Tempo: ~1min
 O FreeBayes é um detector variante genético Bayesiano projetado para encontrar pequenos polimorfismos, especificamente SNPs (polimorfismos de nucleotídeo único), indels (inserções e deleções), MNPs (polimorfismos de múltiplos nucleotídeos) e eventos complexos (eventos compostos de inserção e substituição) menores que os comprimento de um alinhamento de seqüenciamento de leitura curta. Link. Tempo (~6min):
 
 ```bash
-freebayes -f ~/bioinfo/reference/hg19.fa -F 0.01 -C 1 --pooled-continuous ~/bioinfo/resultados/003/003_sort.bam > ~/bioinfo/resultados/003/003.vcf
+freebayes -f bioinfo/reference/hg19.fa -F 0.01 -C 1 --pooled-continuous bioinfo/resultados/003/003_sort.bam > bioinfo/resultados/003/003.vcf
 ```
 
 ### Parâmetros
@@ -322,7 +308,7 @@ ANNOVAR éma ferramenta eficiente para anotar funcionalmente variantes genética
 
 
 ```bash                   
-perl /bioinfo/app/annovar/convert2annovar.pl -format vcf4 ~/bioinfo/resultados/003/003.vcf > ~/bioinfo/resultados/003/003.avinput
+perl /bioinfo/app/annovar/convert2annovar.pl -format vcf4 bioinfo/resultados/003/003.vcf > bioinfo/resultados/003/003.avinput
 ``` 
 
 ***output: mensagens na tela***
@@ -363,7 +349,7 @@ ANNOVAR convert2annovar 003 resultado
 Anotar as variantes chamadas utilizando algumas bases de dados públicas: Tempo (~5s).
 
 ```
-perl /bioinfo/app/annovar/table_annovar.pl resultados/003/003.avinput ~/bioinfo/app/annovar/humandb/ -buildver hg19 -out ~/bioinfo/resultados/003/003 -remove -protocol refGene,exac03,clinvar_20200316 -operation g,f,f -nastring .
+perl /bioinfo/app/annovar/table_annovar.pl resultados/003/003.avinput bioinfo/app/annovar/humandb/ -buildver hg19 -out bioinfo/resultados/003/003 -remove -protocol refGene,exac03,clinvar_20200316 -operation g,f,f -nastring .
 ```
 
 ***output:***
