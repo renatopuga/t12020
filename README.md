@@ -22,6 +22,7 @@ pwd
 
 # criar o diretorio no home (caso ele ainda nao exista)
 mkdir bioinfo/
+mkdir bioinfo/app
 mkdir bioinfo/resultados
 mkdir bioinfo/reference
 mkdir bioinfo/data
@@ -34,11 +35,8 @@ Fonte: [Comandos Básicos do Terminal Linux](http://swcarpentry.github.io/shell-
 # Diretório de Resultados
 
 ```bash
-# volta para casa
-cd
-
-# mkdir para criar um diretorio
-mkdir bioinfo/resultados
+# volta para workspace
+cd /workspace/t12020
 
 # cd para entrar no diretorio resultados
 cd bioinfo/resultados/
@@ -63,7 +61,7 @@ git clone https://github.com/circulosmeos/gdown.pl.git
 mv 003.fastq.gz 017.fastq.gz 019.fastq.gz  bioinfo/data/fastq
 
 # voltar para o home
-cd
+cd /workspace/t12020
 ```
 
 
@@ -75,11 +73,16 @@ No terminal do Linux, vamos instalar alguns pacotes: (o resto vem instalado).
 # install dabases annovar
 # NOTA: entreno no site do ANNOVAR com seu e-mail e salve o arquivo no diretorio: bionfo/app/
 
-# entrar no diretorio
-cd bioinfo/app/
+cd /workspace/t12020
 
 # download do arquivo annovar.latest.tar.gz
 ./gdown.pl/gdown.pl https://drive.google.com/file/d/1XVnRT0GUKFuQifvoROgHMqoy4aV3PCGX/view?usp=sharing annovar.tar.gz
+
+# mover annovar
+mv annovar.tar.gz bioinfo/app
+
+# entrar no diretorio
+cd bioinfo/app/
 
 # descompactar 
 tar -zxvf annovar.tar.gz
@@ -90,6 +93,9 @@ cd annovar
 # baixar as bases: clinvar e exac03
 perl annotate_variation.pl -buildver hg19 -downdb -webfrom annovar clinvar_20200316  humandb/
 perl annotate_variation.pl -buildver hg19 -downdb -webfrom annovar exac03 humandb/
+
+# voltar para workspace
+cd /workspace/t12020
 ```
 
 
@@ -134,6 +140,8 @@ Acessar o site: [Sequence and Annotation Downloads](http://hgdownload.cse.ucsc.e
 
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
 
 cd bioinfo/reference
 
@@ -148,6 +156,9 @@ zcat chr13.fa.gz chr17.fa.gz > hg19.fa
 
 # rm para deletar os arquivos chr13.fa e chr17.fa
 rm chr13.fa chr17.fa
+
+# voltar para workspace
+cd /workspace/t12020
 ```
 
 # BWA: index reference
@@ -156,6 +167,11 @@ Agora, é preciso indexar o arquivo FASTA da referência. Todos os programas de 
 ***NOTA:*** A etapa de index é feita apenas uma vez para cada arquivo de referência:
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
+
+cd bioinfo/reference
+
 # bwa index para gerar o index da referencia hg19.fa
 
 # entrar no diretorio reference
@@ -163,6 +179,9 @@ cd bioinfo/reference
 
 # indexar o arquivo hg19.fa
 bwa index hg19.fa 
+
+# voltar para workspace
+cd /workspace/t12020
 ```
 
 # FastQC: Relatório de Controle de Qualidade
@@ -172,8 +191,8 @@ Gerar relatório de controle de qualidade com FastQC (Tempo ~10s):
 # fastqc para gerar relatorio de qualidade dos arquivo FASTQ
 # opcao (-o ./) diz para salvar o resultado no mesmo arquivo em que o comando esta sendo rodado.
 
-# cd para voltar para a casa
-cd
+# voltar para workspace
+cd /workspace/t12020
 
 # rodar fastqc e salvar o resultado de cada amostra em seu diretorio
 fastqc -o bioinfo/resultados/003/ bioinfo/data/fastq/003.fastq.gz 
@@ -202,8 +221,8 @@ python3 -m pip install --user --upgrade cutadapt
  -M LEN[:LEN2], --maximum-length=LEN[:LEN2]
                         Discard reads longer than LEN. Default: no limit
  
-# cd para voltar para a casa
-cd
+# voltar para workspace
+cd /workspace/t12020
 
 # cutadapt para remover sequencias de tamanho menores 100pb e maiores que 220
 cutadapt --minimum-length 100 --maximum-length 220 -q 15  -o bioinfo/resultados/003/003.cutadapt.fastq  bioinfo/data/fastq/003.fastq.gz
@@ -217,11 +236,11 @@ cutadapt --minimum-length 100 --maximum-length 220 -q 15  -o bioinfo/resultados/
 Alinha sequencias de tamanho 70bp-1Mbp com o algoritmo BWA-MEM. Em resumo o algoritmo trabalha com "alinhamento por sementes" com maximal exact matches (MEMs) e então estendendo sementes com o algoritmo Smith-Waterman (SW). Link. Tempo (~60s):
 
 ```bash
-# cd para voltar para casa
-cd
+# voltar para workspace
+cd /workspace/t12020
 
 # rodar bwa para alinhar as sequencias contra o genoma de referencia
-bwa mem -R '@RG\tID:003\tSM:003_NGSA\tLB:Agilent\tPL:Ion'  bioinfo/reference/hg19.fa bioinfo/data/fastq/003.fastq.gz > bioinfo/resultados/003/003.sam
+bwa mem -R '@RG\tID:003\tSM:003_NGSA\tLB:XPTO\tPL:Ion'  bioinfo/reference/hg19.fa bioinfo/data/fastq/003.cutadapt.fastq > bioinfo/resultados/003/003.sam
 ```
 
 BWA-mem 003 resultado
@@ -235,6 +254,9 @@ BWA-mem 003 resultado
 Preencha coordenadas de posicionamento, posicione FLAGs relacionadas a partir a alinhamentos classificados por nome. Tempo (~5s):
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
+
 samtools fixmate bioinfo/resultados/003/003.sam bioinfo/resultados/003/003.bam
 ```
 
@@ -249,6 +271,9 @@ Tempo: ~10min
 O ***samtools sort*** vai ordenar de nome para ordem de coordenadas. Tempo (5s):
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
+
 time samtools sort -O bam -o bioinfo/resultados/003/003_sort.bam -T /tmp/ bioinfo/resultados/003/003.bam 
 ```
 
@@ -263,6 +288,9 @@ Tempo: ~1min
 O ***samtools index*** cria um index (.BAI) do arquivo binário (.BAM):
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
+
 samtools index bioinfo/resultados/003/003_sort.bam 
 ```
 
@@ -276,6 +304,9 @@ Tempo: ~1min
 O FreeBayes é um detector variante genético Bayesiano projetado para encontrar pequenos polimorfismos, especificamente SNPs (polimorfismos de nucleotídeo único), indels (inserções e deleções), MNPs (polimorfismos de múltiplos nucleotídeos) e eventos complexos (eventos compostos de inserção e substituição) menores que os comprimento de um alinhamento de seqüenciamento de leitura curta. Link. Tempo (~6min):
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
+
 freebayes -f bioinfo/reference/hg19.fa -F 0.01 -C 1 --pooled-continuous bioinfo/resultados/003/003_sort.bam > bioinfo/resultados/003/003.vcf
 ```
 
@@ -304,8 +335,11 @@ Tempo: ~10min
 ANNOVAR éma ferramenta eficiente para anotar funcionalmente variantes genéticas detectadas a partir de diversos genomas (incluindo o genoma humano hg18, hg19, hg38, bem como mouse, verme, mosca, levedura e muitos outros). [Link]. Aqui vamos converter .VCF para .avinput. Tempo (~5s):
 
 
-```bash                   
-perl /bioinfo/app/annovar/convert2annovar.pl -format vcf4 bioinfo/resultados/003/003.vcf > bioinfo/resultados/003/003.avinput
+```bash 
+# voltar para workspace
+cd /workspace/t12020
+
+perl bioinfo/app/annovar/convert2annovar.pl -format vcf4 bioinfo/resultados/003/003.vcf > bioinfo/resultados/003/003.avinput
 ``` 
 
 ***output: mensagens na tela***
@@ -324,6 +358,9 @@ Error running system command: <annotate_variation.pl -geneanno -buildver hg19 -d
 
 
 ```bash
+# voltar para workspace
+cd /workspace/t12020
+
 # comando head para listar as 10 primeiras linhas do arquivo 003.avinput
 head resultados/003/003.avinput
 
@@ -346,7 +383,10 @@ ANNOVAR convert2annovar 003 resultado
 Anotar as variantes chamadas utilizando algumas bases de dados públicas: Tempo (~5s).
 
 ```
-perl /bioinfo/app/annovar/table_annovar.pl resultados/003/003.avinput bioinfo/app/annovar/humandb/ -buildver hg19 -out bioinfo/resultados/003/003 -remove -protocol refGene,exac03,clinvar_20200316 -operation g,f,f -nastring .
+# voltar para workspace
+cd /workspace/t12020
+
+perl bioinfo/app/annovar/table_annovar.pl resultados/003/003.avinput bioinfo/app/annovar/humandb/ -buildver hg19 -out bioinfo/resultados/003/003 -remove -protocol refGene,exac03,clinvar_20200316 -operation g,f,f -nastring . 
 ```
 
 ***output:***
@@ -388,6 +428,10 @@ NOTICE: Multianno output file is written to resultados/003/003.hg19_multianno.tx
 **Arquivo .hg19_multiano.txt**
 
 ```bash
+
+# voltar para workspace
+cd /workspace/t12020
+
 # filtro com o comando grep para buscar apenas o cabeçalho e variantes do tipo exonic
 grep "^Chr\|exonic" resultados/003/003.hg19_multianno.txt  | head
 
