@@ -1,6 +1,24 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/renatopuga/t12020)
 
-# t12020 - Ambiente SSH: Linux e Primeiros Pipes
+# t12020 - Meu Primeiro Pipeline de NGS
+
+# Olá Ambiente de Bioinformática
+***Linux:*** O Linux é um sistema operacional, assim como o Windows da Microsoft e o Mac OS da Apple. Ele foi criado pelo finlandês Linus Torvalds, e o nome é a mistura do nome do criador com Unix, um antigo sistema operacional da empresa de mesmo nome. [O que é Linux?](https://www.techtudo.com.br/artigos/noticia/2011/12/o-que-e-linux.html).
+
+***Pipelines:*** Primeiro, o pipeline não é um termo de bioinformática, é na verdade um termo de ciência da computação, envolve encadeamento de processos / threads / funções etc. Em resumo, o resultado de um processo é a entrada de um novo processo na sequência. [A review of bioinformatic pipeline frameworks](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/)
+
+# Qual ambiente vamos utilizar?
+Vamos utilizar uma instância na Amazon Cloud com Sistema Operacional Linux Ubuntu. Os programas para que possamos criar nosso pipeline de análises de sequenciamento de nova geração já foram instalados e serão apenas listados nesse documento. O objetivo é melhorar a experiência de usuários iniciantes em "digitar comandos em um terminal linux" e ser um roteiro para que todos possam se localizar.
+
+# Programas Utilizados
+Listamos os programas previamente instalados em nosso ambiente para executar o pipeline de chamada de varinates:
+
+* annovar [Download](http://annovar.openbioinformatics.org/)
+* bwa [Download](http://bio-bwa.sourceforge.net/)
+* FastQC [Download](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+* freebayes [Download](https://github.com/ekg/freebayes)
+* samtools [Download](http://samtools.sourceforge.net/)
+
 
 # gitbash
 
@@ -9,6 +27,9 @@
 	
 * Para Macbook: 
 	Buscar no Spotlight (buscar por Terminal - dois cliques)
+	
+* Para Linux: 
+	Procure por Terminal
 
 
 # Primeiros Comandos
@@ -19,6 +40,27 @@ ls
 
 # pwd para informar o diretorio atual
 pwd
+```
+
+Fonte: [Comandos Básicos do Terminal Linux](http://swcarpentry.github.io/shell-novice/)
+
+# Estrutura de Diretórios
+Estrutura de diretórios: sequências, programas e arquivos de referência.
+
+* bioinfo
+	* bioinfo/app
+	* bioinfo/data
+		* bioinfo/data/fastq
+	* bioinfo/reference
+  * bioinfo/resultados
+
+
+# Criando a Estrutura de Diretórios
+
+```bash
+
+# volta para workspace
+cd /workspace/t12020
 
 # criar o diretorio no home (caso ele ainda nao exista)
 mkdir bioinfo/
@@ -30,7 +72,6 @@ mkdir bioinfo/data/fastq
 
 ```
 
-Fonte: [Comandos Básicos do Terminal Linux](http://swcarpentry.github.io/shell-novice/)
 
 # Diretório de Resultados
 
@@ -104,41 +145,6 @@ perl annotate_variation.pl -buildver hg19 -downdb -webfrom annovar exac03 humand
 # voltar para workspace
 cd /workspace/t12020
 ```
-
-
-# Bioinformática: Pipelines e Comandos
-
-
-# Olá Ambiente de Bioinformática
-***Linux:*** O Linux é um sistema operacional, assim como o Windows da Microsoft e o Mac OS da Apple. Ele foi criado pelo finlandês Linus Torvalds, e o nome é a mistura do nome do criador com Unix, um antigo sistema operacional da empresa de mesmo nome. [O que é Linux?](https://www.techtudo.com.br/artigos/noticia/2011/12/o-que-e-linux.html).
-
-***Pipelines:*** Primeiro, o pipeline não é um termo de bioinformática, é na verdade um termo de ciência da computação, envolve encadeamento de processos / threads / funções etc. Em resumo, o resultado de um processo é a entrada de um novo processo na sequência. [A review of bioinformatic pipeline frameworks](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5429012/)
-
-# Qual ambiente vamos utilizar?
-Vamos utilizar uma instância na Amazon Cloud com Sistema Operacional Linux Ubuntu. Os programas para que possamos criar nosso pipeline de análises de sequenciamento de nova geração já foram instalados e serão apenas listados nesse documento. O objetivo é melhorar a experiência de usuários iniciantes em "digitar comandos em um terminal linux" e ser um roteiro para que todos possam se localizar.
-
-# Estrutura de Diretórios
-Estrutura de diretórios: sequências, programas e arquivos de referência.
-
-* bioinfo
-	* bioinfo/app
-	* bioinfo/data
-		* bioinfo/data/fastq
-	* bioinfo/reference
-  * bioinfo/resultados
-
-
-# Programas Instalados
-Listamos os programas previamente instalados em nosso ambiente para executar o pipeline de chamada de varinates:
-
-* annovar [Download](http://annovar.openbioinformatics.org/)
-* bwa [Download](http://bio-bwa.sourceforge.net/)
-* FastQC [Download](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-* freebayes [Download](https://github.com/ekg/freebayes)
-* samtools [Download](http://samtools.sourceforge.net/)
-
-
-
 
 # Download das Referências
 Nesta estapa vamos utilizar dois cromossomos humanos (chr13 e chr17), nossos genes de interesse são: BRCA1 e BRCA2. [NCBI BRCA 1 and 2](https://www.ncbi.nlm.nih.gov/books/NBK470239/)
