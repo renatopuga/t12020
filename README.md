@@ -399,7 +399,7 @@ Anotar as variantes chamadas utilizando algumas bases de dados públicas: Tempo 
 # voltar para workspace
 cd /workspace/t12020
 
-perl bioinfo/app/annovar/table_annovar.pl resultados/003/003.avinput bioinfo/app/annovar/humandb/ -buildver hg19 -out bioinfo/resultados/003/003 -remove -protocol refGene,exac03,clinvar_20200316 -operation g,f,f -nastring . 
+perl bioinfo/app/annovar/table_annovar.pl bioinfo/resultados/003/003.avinput bioinfo/app/annovar/humandb/ -buildver hg19 -out bioinfo/resultados/003/003 -remove -protocol refGene,exac03,clinvar_20200316 -operation g,f,f -nastring . 
 ```
 
 ***output:***
