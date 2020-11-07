@@ -247,7 +247,7 @@ Alinha sequencias de tamanho 70bp-1Mbp com o algoritmo BWA-MEM. Em resumo o algo
 cd /workspace/t12020
 
 # rodar bwa para alinhar as sequencias contra o genoma de referencia
-bwa mem -R '@RG\tID:003\tSM:003_NGSA\tLB:XPTO\tPL:Ion'  bioinfo/reference/hg19.fa bioinfo/data/fastq/003.cutadapt.fastq > bioinfo/resultados/003/003.sam
+bwa mem -R '@RG\tID:003\tSM:003_NGSA\tLB:XPTO\tPL:Ion'  bioinfo/reference/hg19.fa bioinfo/resultados/003/003.cutadapt.fastq > bioinfo/resultados/003/003.sam
 ```
 
 BWA-mem 003 resultado
