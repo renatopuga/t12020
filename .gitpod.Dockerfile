@@ -10,7 +10,7 @@ RUN sudo apt-get update -y \
   && sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata \ 
   && sudo apt-get install -y fastqc samtools bwa freebayes
 
-RUN sudo apt-get install cpanm \
+RUN sudo apt-get install -y cpanm \
     && sudo cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) \
     && sudo cpanm install DBI Spread Module::Build Try::Tiny DBD::mysql
 
